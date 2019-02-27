@@ -22,20 +22,13 @@ def scrape():
 
 
     html = browser.html
-        # Parse HTML with Beautiful Soup
     soup = BeautifulSoup(html, 'html.parser')
-
     articles = soup.find('div', class_='content_title')
-
-
     link = articles.find('a')
     href = link['href']
     news_title = link.string
-
     teaser = soup.find('div', class_='article_teaser_body')
-    news_p = teaser.string
-
-    
+    news_p = teaser.string    
     print(news_title)
     print(news_p)
     mars_data["title"] = news_title
@@ -43,14 +36,8 @@ def scrape():
 
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(image_url)
-
-    html = browser.html
-    # Parse HTML with Beautiful Soup
-    soup = BeautifulSoup(html, 'html.parser')
-
-
     browser.click_link_by_partial_text('FULL IMAGE')
-    time.sleep(5) 
+    time.sleep(3) 
     browser.click_link_by_partial_text('more info')
 
 
@@ -58,13 +45,9 @@ def scrape():
     browser.visit(new_url)
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-
-
-    image =soup.find_all('figure', class_='lede')
-   
+    image =soup.find_all('figure', class_='lede')   
     link = image[0].find('a')
     href = link['href']
     image_url = 'https://jpl.nasa.gov'+ href
@@ -78,8 +61,6 @@ def scrape():
 
 
     tweet = soup.find_all('div', class_='stream-container')
-
-
     paragraph=tweet[0].find('p')
     mars_weather = paragraph.text
     print(mars_weather)
@@ -91,26 +72,18 @@ def scrape():
     browser.visit(mars_facts_url)
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-
-
     tables = pd.read_html(mars_facts_url)
-
     df = tables[0]
     df.columns = ['description', 'value']
     df.set_index('description', inplace=True)
-
-
     html_table = df.to_html()
     html_table
-
     mars_data_table = html_table.replace("\n", "")
     mars_data["table"] = mars_data_table    
     
     mars_hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemispheres_url)
-    html = browser.html
-    soup = BeautifulSoup(html, 'html.parser')
-    time.sleep(5)
+    time.sleep(3)
     browser.click_link_by_partial_text('Cerberus Hemisphere')
 
     new_url = browser.url
@@ -125,9 +98,7 @@ def scrape():
 
     mars_hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemispheres_url)
-    html = browser.html
-    soup = BeautifulSoup(html, 'html.parser')
-    time.sleep(5)
+    time.sleep(3)
     browser.click_link_by_partial_text('Schiaparelli Hemisphere')
 
     new_url = browser.url
@@ -142,9 +113,7 @@ def scrape():
 
     mars_hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemispheres_url)
-    html = browser.html
-    soup = BeautifulSoup(html, 'html.parser')
-    time.sleep(5)
+    time.sleep(3)
     browser.click_link_by_partial_text('Syrtis Major Hemisphere')
 
     new_url = browser.url
@@ -159,9 +128,7 @@ def scrape():
 
     mars_hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(mars_hemispheres_url)
-    html = browser.html
-    soup = BeautifulSoup(html, 'html.parser')
-    time.sleep(5)
+    time.sleep(3)
     browser.click_link_by_partial_text('Valles Marineris Hemisphere')
 
     new_url = browser.url
